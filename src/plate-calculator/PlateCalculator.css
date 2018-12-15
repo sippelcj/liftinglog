@@ -1,0 +1,4 @@
+.plate-calculator {
+    display: flex;
+    flex-direction: column;
+}
