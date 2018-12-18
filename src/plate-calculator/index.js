@@ -40,6 +40,10 @@ class PlateCalculator extends Component {
             <label>35</label>
         </span>
         <span>
+            <input checked type="checkbox" />
+            <label>25</label>
+        </span>
+        <span>
             <label> Type in a weight </label>
             <input type="text" name="name" onChange={this.updateInput}/>
         </span>
