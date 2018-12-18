@@ -123,5 +123,8 @@
     "platforms": [
       "browser"
     ]
+  },
+  "devDependencies": {
+    "plate-calculator": "^1.0.5"
   }
 }

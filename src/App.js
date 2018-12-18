@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PlateCalculator from './plate-calculator';
+import WorkoutEditorView from './workout-editor';
 import './App.css';
 
 class App extends Component {
@@ -14,6 +15,11 @@ class App extends Component {
 
   openPlateCalculator = () => {
     const newView = <PlateCalculator closeCallback={this.closeCallback}/>;
+    this.setState({mainView: newView});
+  };
+
+  openWorkoutEditor = () => {
+    const newView = <WorkoutEditorView closeCallback={this.closeCallback}/>;
     this.setState({mainView: newView});
   };
 
@@ -32,7 +38,7 @@ class App extends Component {
           <br/>
           <div className='footer-comp'>
             <button onClick={this.openPlateCalculator}> Go To Plate Calculator</button>
-            <button> Edit Day</button>
+            <button onClick={this.openWorkoutEditor}> Edit Workout</button>
             <button> Edit Routine</button>
           </div>
         </header>
