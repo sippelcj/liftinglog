@@ -1,6 +1,11 @@
 export const defaultExercises = {
+    CloseGripPushUp: {
+      name: 'CloseGripPushUp',
+      // type = reps (use bodyweight as volume calculator)
+    },
     BarbellSquat: {
-        name: 'BarbellSquat',
+      name: 'BarbellSquat',
+      // type = sets and reps
     },
     BarbellBenchPress: {
         name: 'BarbellBenchPress',
@@ -19,9 +24,6 @@ export const defaultExercises = {
     },
     BarbellBicepCurl: {
         name: 'BarbellBicepCurl',
-    },
-    CloseGripPushUp: {
-        name: 'CloseGripPushUp',
     },
     FrontSquat: {
         name: 'FrontSquat',
@@ -162,7 +164,7 @@ export const defaultRountines = {
           workout: 'LowerVolume',
         },
         Sat: {
-
+          // optional arm day
         },
         Sun : {
 
@@ -171,9 +173,11 @@ export const defaultRountines = {
     StartingStrength: {
         A: {
           workout: 'StartingStrengthA',
+          // optional accesory work
         },
         B: {
           workout: 'StartingStrengthB',
+          // optional accesory work
         },
     },
 };

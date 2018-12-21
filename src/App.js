@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import LoggingView from './views/logging-view';
 import PlateCalculator from './views/plate-calculator';
+import LoggingView from './views/logging-view';
 import WorkoutEditorView from './views/workout-editor';
 import RoutineEditorView from './views/routine-editor';
 import './App.css';
-import { getCurrentRoutineName, getWorkoutByDay } from './data-helpers';
+import { getCurrentRoutineName, getWorkoutByDay } from './helpers';
 
 class App extends Component {
   constructor(props) {

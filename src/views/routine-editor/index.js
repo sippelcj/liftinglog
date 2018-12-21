@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getRoutineList } from '../../data-helpers';
+import { getRoutineList } from '../../helpers';
 import RoutineViewer from '../routine-view';
 
 class RoutineEditorView extends Component {
@@ -13,7 +13,6 @@ class RoutineEditorView extends Component {
 
   setRoutine = (e) => {
     // set the main state to the selected routine
-    console.log(e.target.innerText);
     const newView = <RoutineViewer
       closeCallback={this.props.closeCallback}
       mainViewCallBack={this.props.mainViewCallBack}

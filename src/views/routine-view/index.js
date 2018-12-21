@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { parseRoutineByName } from '../../data-helpers';
+import { parseRoutineByName } from '../../helpers';
 class RoutineViewer extends Component {
   constructor(props) {
     super(props);

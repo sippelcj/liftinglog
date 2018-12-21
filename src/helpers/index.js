@@ -1,3 +1,4 @@
+import React from 'react';
 import { defaultRountines, defaultWorkouts } from '../constants';
 
 // TODO need to handle A/B day type workouts
@@ -62,5 +63,20 @@ export const getRoutineList = () => {
     // get routines from local storage
     const routines = defaultRountines; //  {...defaultRountines, ...localRoutines} 
     return routines;
+}
+
+  // return a default jsx object for logging the current day
+  // need to be able to add sets/excercises ect...
+export const createLoggingForm = (workout) => {
+    workout.array.forEach(element => {
+      
+    });
+
+    return (
+      <div>
+        { /* list of excercises in the current workout */ }
+
+      </div>
+    );
 }
 

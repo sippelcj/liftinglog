@@ -1,27 +1,23 @@
 import React, { Component } from 'react';
+import { getRoutineList } from '../../helpers';
 
-class WorkoutEditorView extends Component {
+class LoggingView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        currentWorkout: this.getWorkoutByDay(),
+        currentWorkout: this.props.currentWorkout,
     }
   }
 
-  getWorkoutByDay = () => {
-      const result = undefined;
-
-      return result;
-  }
-
+  // Create helper for making editable grid
   render() {
     return (
       <div className="list-view">
-        <div> View for current days workout</div>
-        {this.state.currentWorkout}
+        {/* {getRoutineList(this.state.currentWorkout)} */}
+        <div> View for logging the current day</div>
       </div>
     );
   }
 }
 
-export default WorkoutEditorView;
+export default LoggingView;
