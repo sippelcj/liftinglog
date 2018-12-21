@@ -5,7 +5,7 @@ class NewWorkoutView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        currentWorkout: undefined
+      currentWorkout: undefined
     }
   }
 

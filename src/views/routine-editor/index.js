@@ -6,8 +6,8 @@ class RoutineEditorView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        currentRoutine: this.props.currentRoutine,
-        routineList: Object.keys(getRoutineList()),
+      currentRoutine: this.props.currentRoutine,
+      routineList: Object.keys(getRoutineList()),
     }
   }
 

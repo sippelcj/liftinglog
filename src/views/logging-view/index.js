@@ -5,7 +5,7 @@ class LoggingView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        currentWorkout: this.props.currentWorkout,
+      currentWorkout: this.props.currentWorkout,
     }
   }
 
