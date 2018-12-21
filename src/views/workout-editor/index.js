@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import './WorkoutEditorView.css';
+import NewWorkoutView from './new-workout';
 
 class WorkoutEditorView extends Component {
   constructor(props) {
@@ -9,12 +9,17 @@ class WorkoutEditorView extends Component {
     }
   }
 
+  addWorkout = () => {
+    const newView = <NewWorkoutView mainViewCallBack={this.props.mainViewCallBack}/>;
+    this.props.mainViewCallBack(newView);
+  };
+
   render() {
     return (
-      <div className="workout-editor">
+      <div className="list-view">
         Workout Editor View
         {this.state.currentWorkout}
-        <button>Add Workout</button>
+        <button onClick={this.addWorkout}>New Workout</button>
         <button onClick={this.props.closeCallback}>Close</button>
       </div>
     );

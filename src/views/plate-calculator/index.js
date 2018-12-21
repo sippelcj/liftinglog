@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import plateCalculator from 'plate-calculator';
+import rm from '1rm';
 import './PlateCalculator.css';
 
 class PlateCalculator extends Component {
@@ -22,11 +23,16 @@ class PlateCalculator extends Component {
     this.setState({calculatedResult: platesString});
   }
 
-  updateInput = (e) => {
+  doOneRMCalculate = () => {
+    const result = rm.brzycki(this.state.weight, this.state.reps);
+    this.setState({oneRM: result});
+  };
+
+  updateInput = (e, inputValue) => {
     this.setState({
-      inputValue: e.target.value
+      [inputValue]: e.target.value
     });
-  }
+  };
 
   render() {
     return (
@@ -45,13 +51,23 @@ class PlateCalculator extends Component {
         </span>
         <span>
             <label> Type in a weight </label>
-            <input type="text" name="name" onChange={this.updateInput}/>
+            <input type="text" name="name" onChange={e => this.updateInput(e, 'calculatedResult')}/>
         </span>
         <span>
           <label> Result: </label>
           {this.state.calculatedResult}
         </span>
         <button onClick={this.calculatePlates}>Calculate</button>
+        <br/>
+        <div />
+          1rm calculator
+          <input type="text" name="weight" onChange={e => this.updateInput(e, 'weight')}/>
+          x
+          <input type="text" name="rep" onChange={e => this.updateInput(e, 'reps')}/>
+          <button onClick={this.doOneRMCalculate}> Calculate</button>
+          <label> Result: </label> {this.state.oneRM}
+        <div />
+        <br/>
         <button onClick={this.props.closeCallback}>Close</button>
       </div>
     );

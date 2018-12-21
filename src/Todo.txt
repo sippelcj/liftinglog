@@ -1,0 +1,39 @@
+Find database of excercises
+
+Things to store:
+    Current Selected Routine
+    Log data structure?
+    Archive log after a year?
+    Import/Export from csv?
+
+Need to figure out how I want to have people setup their routine
+    Build Out Routine Builder
+
+    Build Out workout editor
+
+    Build Out logging view/editor
+
+    Make some Mocks of screens
+
+
+
+Testing Data Structure for Logging
+log = {
+    12/20/2018: {
+        name: '',
+        sets: [
+            {
+                name: 'barbell something',
+                warmups: [
+
+                ]
+                worksets: [
+                    {
+                        weight: 225,
+                        reps: 8
+                    }
+                ]
+            }
+        ],
+    },
+};
