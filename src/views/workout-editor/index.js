@@ -6,11 +6,11 @@ class WorkoutEditorView extends Component {
     super(props);
     this.state = {
       currentWorkout: undefined
-    }
+    };
   }
 
   addWorkout = () => {
-    const newView = <NewWorkoutView mainViewCallBack={this.props.mainViewCallBack}/>;
+    const newView = <NewWorkoutView mainViewCallBack={this.props.mainViewCallBack} />;
     this.props.mainViewCallBack(newView);
   };
 
@@ -19,8 +19,12 @@ class WorkoutEditorView extends Component {
       <div className="list-view">
         Workout Editor View
         {this.state.currentWorkout}
-        <button onClick={this.addWorkout}>New Workout</button>
-        <button onClick={this.props.closeCallback}>Close</button>
+        <button type="button" onClick={this.addWorkout}>
+          New Workout
+        </button>
+        <button type="button" onClick={this.props.closeCallback}>
+          Close
+        </button>
       </div>
     );
   }

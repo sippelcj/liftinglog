@@ -11,10 +11,9 @@ const startApp = () => {
   // Learn more about service workers: http://bit.ly/CRA-PWA
   serviceWorker.unregister();
 };
-  
-if(window.cordova) {
+
+if (window.cordova) {
   document.addEventListener('deviceready', startApp, false);
 } else {
   startApp();
 }
-

@@ -6,7 +6,7 @@ import './PlateCalculator.css';
 class PlateCalculator extends Component {
   constructor(props) {
     super(props);
-    this.state = {calculatedResult: undefined};
+    this.state = { calculatedResult: undefined };
   }
 
   calculatePlates = () => {
@@ -15,17 +15,19 @@ class PlateCalculator extends Component {
 
     let platesString = '';
     result.plates.forEach(plate => {
-      for(let numPlates = 0; numPlates < plate.qty/2; numPlates++){
+      for (let numPlates = 0; numPlates < plate.qty / 2; numPlates++) {
         platesString += `${plate.plateWeight}, `;
       }
     });
-    platesString = platesString.replace(/,\s*$/, "");
-    this.setState({calculatedResult: platesString});
-  }
+    platesString = platesString.replace(/,\s*$/, '');
+    this.setState({ calculatedResult: platesString });
+  };
 
   doOneRMCalculate = () => {
-    const result = rm.brzycki(this.state.weight, this.state.reps);
-    this.setState({oneRM: result});
+    const { weight, reps } = this.state;
+
+    const result = rm.brzycki(weight, reps);
+    this.setState({ oneRM: result });
   };
 
   updateInput = (e, inputValue) => {
@@ -37,38 +39,54 @@ class PlateCalculator extends Component {
   render() {
     return (
       <div className="plate-calculator">
+        <label htmlFor="45checkbox">
+          45
+          <input id="45checkbox" checked type="checkbox" />
+        </label>
+        <label htmlFor="35checkbox">
+          35
+          <input id="35checkbox" checked type="checkbox" />
+        </label>
+        <label htmlFor="25checkbox">
+          25
+          <input id="25checkbox" checked type="checkbox" />
+        </label>
+        <label htmlFor="10checkbox">
+          10
+          <input id="10checkbox" checked type="checkbox" />
+        </label>
+        <label htmlFor="weight-input">
+          Type in a weight
+          <input
+            id="weight-input"
+            type="text"
+            name="name"
+            onChange={e => this.updateInput(e, 'calculatedResult')}
+          />
+        </label>
         <span>
-            <input checked type="checkbox" />
-            <label>45</label>
-        </span>
-        <span>
-            <input checked type="checkbox" />
-            <label>35</label>
-        </span>
-        <span>
-            <input checked type="checkbox" />
-            <label>25</label>
-        </span>
-        <span>
-            <label> Type in a weight </label>
-            <input type="text" name="name" onChange={e => this.updateInput(e, 'calculatedResult')}/>
-        </span>
-        <span>
-          <label> Result: </label>
+          Result:
           {this.state.calculatedResult}
         </span>
-        <button onClick={this.calculatePlates}>Calculate</button>
-        <br/>
+        <button type="button" onClick={this.calculatePlates}>
+          Calculate
+        </button>
+        <br />
         <div />
-          1rm calculator
-          <input type="text" name="weight" onChange={e => this.updateInput(e, 'weight')}/>
-          x
-          <input type="text" name="rep" onChange={e => this.updateInput(e, 'reps')}/>
-          <button onClick={this.doOneRMCalculate}> Calculate</button>
-          <label> Result: </label> {this.state.oneRM}
+        1rm calculator
+        <input type="text" name="weight" onChange={e => this.updateInput(e, 'weight')} />
+        x
+        <input type="text" name="rep" onChange={e => this.updateInput(e, 'reps')} />
+        <button type="button" onClick={this.doOneRMCalculate}>
+          {' '}
+          Calculate
+        </button>
+        <span> Result: {this.state.oneRM}</span>
         <div />
-        <br/>
-        <button onClick={this.props.closeCallback}>Close</button>
+        <br />
+        <button type="button" onClick={this.props.closeCallback}>
+          Close
+        </button>
       </div>
     );
   }

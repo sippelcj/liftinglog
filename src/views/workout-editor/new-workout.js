@@ -5,8 +5,8 @@ class NewWorkoutView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentWorkout: undefined
-    }
+      // currentWorkout: undefined
+    };
   }
 
   handleDone = () => {
@@ -17,7 +17,9 @@ class NewWorkoutView extends Component {
     return (
       <div className="list-view">
         New Workout View
-        <button onClick={this.handleDone}>Done</button>
+        <button type="button" onClick={this.handleDone}>
+          Done
+        </button>
       </div>
     );
   }
