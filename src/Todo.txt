@@ -23,20 +23,32 @@ Need to figure out how I want to have people setup their routine
 Testing Data Structure for Logging
 log = {
   12/20/2018: {
-    name: '',
+    name: 'LowerStrength', // maps to key name of workout
     sets: [
       {
-        name: 'barbell something',
+        name: 'Barbell Squat',
         warmups: [
 
-        ]
+        ],
         worksets: [
           {
             weight: 225,
             reps: 8
           }
-        ]
-      }
+        ],
+      },
     ],
   },
 };
+
+New file Every Year?
+New file every day?
+New file every week? ... ????
+
+Figure out how to store current log data
+  Create Log On Load
+    Object will initially be whatever was in the original object in the routine
+    But can be customized on a day to day basis
+  When add exercise or set where do we store it?
+  Store it in localData? 
+    will get added in when we load

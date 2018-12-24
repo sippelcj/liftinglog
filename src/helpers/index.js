@@ -1,4 +1,7 @@
 import React from 'react';
+import { IconContext } from 'react-icons';
+import { FaPlusCircle } from 'react-icons/fa';
+import { Container, Row, Col } from 'react-grid-system';
 import { defaultRountines, defaultWorkouts } from '../constants';
 
 // TODO need to handle A/B day type workouts
@@ -16,6 +19,25 @@ export const getWorkoutFromRoutine = (currentRoutineName, dayOfWeek) => {
       // if advanced getWorkoutFromAdvanced
     }
     return undefined;
+  }
+  return undefined;
+};
+
+export const getWorkoutFromSplit = (routineObject, dayOfWeek) => {
+  // Get the type of split
+  // Monday Wednesday Friday A/B Split
+  // Monday Wednesday Friday A/B/C/D Split
+  // Make it work for any day of week and any number of days
+  //
+  // get next day of the week in program
+  // see if previous day of weeks workout was completed, need to store previously completed workout?
+  //
+  // Otherwise get first day of program
+  //
+  // check storage for previous workout
+  const routineForDay = routineObject[dayOfWeek];
+  if (routineForDay !== undefined) {
+    return getWorkoutByName(routineForDay.workout);
   }
   return undefined;
 };
@@ -90,17 +112,47 @@ export const createLoggingForm = workout => {
   if (workout) {
     const result = [];
     workout.forEach(exercise => {
+      // Container, Row, Col
+
+      // foreach set instead
+      let setNum = 0;
+      for (setNum; setNum < exercise.sets; setNum++) {
+        result.push(
+          <Row>
+            <Col sm={4}> {exercise.movement}: </Col>
+            <Col sm={3}>Prev Weight</Col>
+            <Col sm={3}>
+              <input type="weight" className="weight-input" placeholder="weight" />
+            </Col>
+            <Col sm={1}> x </Col>
+            <Col sm={1}>
+              <input type="reps" className="rep-input" defaultValue={exercise.reps} />
+            </Col>
+          </Row>
+        );
+      }
+      // if more data -
       result.push(
         <div>
-          <span> {exercise.movement}: </span>
-          <input type="sets" defaultValue={exercise.sets} />
-          <span> x </span>
-          <input type="reps" defaultValue={exercise.reps} />
+          <Row>
+            <Col sm={1} offset={{ sm: 11 }}>
+              <button className="add-button" type="button">
+                <IconContext.Provider value={{ size: '2em' }}>
+                  <div>
+                    <FaPlusCircle />
+                  </div>
+                </IconContext.Provider>
+              </button>
+            </Col>
+          </Row>
+          <Row>
+            <hr />
+          </Row>
         </div>
       );
     });
 
-    return <div>{result}</div>;
+    return <Container>{result}</Container>;
   }
   return undefined;
 };

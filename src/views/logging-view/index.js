@@ -15,6 +15,7 @@ class LoggingView extends Component {
     }
     return 'Nothing scheduled for today';
     // Todo add way to manually create workout for day
+    // (can add excercises from add button)
   };
 
   render() {

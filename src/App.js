@@ -80,7 +80,7 @@ class App extends Component {
           {dayOfWeek}
           <span> {currentRoutineName} = routine</span>
           <button type="button">
-            <IconContext.Provider value={{ color: 'blue', size: '2em' }}>
+            <IconContext.Provider value={{ color: 'white', size: '2em' }}>
               <div>
                 <FaBars />
               </div>
@@ -89,8 +89,6 @@ class App extends Component {
         </header>
         <body className="App-body">
           <div className="main-view-container">{mainView}</div>
-          <div> something else </div>
-          <div> something else </div>
           <button className="add-button" type="button">
             <IconContext.Provider value={{ size: '2em' }}>
               <div>

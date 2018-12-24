@@ -51,6 +51,21 @@
   margin: 20px;
 }
 
+button,
+input[type='button'] {
+  background: none;
+  border: none;
+  margin: 5px;
+}
+
+.weight-input {
+  width: 80px;
+}
+
+.rep-input {
+  width: 40px;
+}
+
 .App-link {
   color: #61dafb;
 }

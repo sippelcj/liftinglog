@@ -63,6 +63,7 @@ export const defaultExercises = {
 export const defaultWorkouts = {
   LowerStrength: [
     {
+      // This needs to map to an actual excercise
       movement: 'Barbell Squat',
       reps: 6,
       sets: 3
@@ -179,7 +180,10 @@ export const defaultRountines = {
     Sunday: {}
   },
   StartingStrength: {
-    periodization: 'MWFSplit',
+    periodization: 'CustomSplit',
+    workDays: ['Monday', 'Wednesday', 'Friday'],
+    workouts: ['A', 'B'],
+    // Need to store what previous workday was
     A: {
       workout: 'StartingStrengthA'
       // optional accesory work
@@ -190,9 +194,10 @@ export const defaultRountines = {
     }
   },
   CanditoAdvancedProgram: {
-    periodization: 'advanced',
+    periodization: 'advanced', // Anything more than a single week is advanced
     Week1: {
       Monday: {}
     }
   }
+  // TODO add cardio day?
 };
