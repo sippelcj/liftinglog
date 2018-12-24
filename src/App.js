@@ -2,7 +2,10 @@ import { IconContext } from 'react-icons';
 import React, { Component } from 'react';
 import moment from 'moment';
 import { FaPlusCircle, FaBars } from 'react-icons/fa';
+import { setConfiguration } from 'react-grid-system';
 import PlateCalculator from './views/plate-calculator';
+import MainView from './views/main-view';
+import ResultsView from './views/results-view';
 import LoggingView from './views/logging-view';
 import WorkoutEditorView from './views/workout-editor';
 import RoutineEditorView from './views/routine-editor';
@@ -12,21 +15,45 @@ import { getCurrentRoutineName, parseRoutineByName, getWorkoutFromRoutine } from
 class App extends Component {
   constructor(props) {
     super(props);
+
+    setConfiguration({ gutterWidth: 10 });
+
     this.state = {};
+    this.state.currentDay = moment();
     this.state.dayOfWeek = moment().format('dddd');
     this.state.currentRoutineName = getCurrentRoutineName();
     this.state.currentRoutine = parseRoutineByName(this.state.currentRoutineName);
     const { dayOfWeek, currentRoutineName } = this.state;
     this.state.currentWorkout = getWorkoutFromRoutine(currentRoutineName, dayOfWeek) || undefined;
 
+    // Get todays log
+    // getLog(currentDay);
     // Logging View is always the default view, so it jump right to logging the current day
-    this.state.mainView = <LoggingView currentWorkout={this.state.currentWorkout} />;
+    this.state.mainView = (
+      <MainView currentWorkout={this.state.currentWorkout} startLogging={this.startLogging} />
+    );
   }
 
   // invoked to "return" back to this form
   closeCallback = () => {
     const { currentWorkout } = this.state;
-    this.setState({ mainView: <LoggingView currentWorkout={currentWorkout} /> });
+    this.setState({
+      mainView: <MainView currentWorkout={currentWorkout} startLogging={this.startLogging} />
+    });
+  };
+
+  startLogging = () => {
+    const { currentWorkout } = this.state;
+    this.setState({
+      mainView: <LoggingView currentWorkout={currentWorkout} resultsView={this.resultsView} />
+    });
+  };
+
+  resultsView = () => {
+    const { currentWorkout } = this.state;
+    this.setState({
+      mainView: <ResultsView currentWorkout={currentWorkout} closeCallback={this.closeCallback} />
+    });
   };
 
   // Set current view to whatever is passed in

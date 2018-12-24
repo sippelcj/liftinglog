@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { createLoggingForm } from '../../helpers';
 
-class LoggingView extends Component {
+class MainView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -10,24 +9,24 @@ class LoggingView extends Component {
   }
 
   createFormContent = props => {
-    if (props.currentWorkout) {
-      return createLoggingForm(props.currentWorkout);
+    const { currentWorkout } = props;
+    if (currentWorkout) {
+      return `${currentWorkout.name} is the workout scheduled for today`;
     }
     return 'Nothing scheduled for today';
-    // Todo add way to manually create workout for day
-    // (can add excercises from add button)
+    // Add options for selecting a current workout or adding excercises individually
   };
 
   render() {
     return (
       <div className="list-view">
         {this.state.formContent}
-        <button type="button" onClick={this.props.resultsView}>
-          Finish
+        <button type="button" onClick={this.props.startLogging}>
+          Start!
         </button>
       </div>
     );
   }
 }
 
-export default LoggingView;
+export default MainView;

@@ -67,7 +67,7 @@ export const parseWorkoutToString = workout => {
   const formattedDay = [];
 
   const workOutForDay = workout;
-  workOutForDay.forEach(exercise => {
+  workOutForDay.workSets.forEach(exercise => {
     const { movement, sets, reps } = exercise;
     formattedDay.push(`${movement} - ${sets} x ${reps}`);
   });
@@ -111,22 +111,33 @@ export const getRoutineList = () => {
 export const createLoggingForm = workout => {
   if (workout) {
     const result = [];
-    workout.forEach(exercise => {
+    workout.workSets.forEach(exercise => {
       // Container, Row, Col
-
-      // foreach set instead
       let setNum = 0;
+      result.push(
+        <Row>
+          <Col xs={12} sm={12}>
+            {exercise.movement}
+          </Col>
+        </Row>
+      );
       for (setNum; setNum < exercise.sets; setNum++) {
         result.push(
           <Row>
-            <Col sm={4}> {exercise.movement}: </Col>
-            <Col sm={3}>Prev Weight</Col>
-            <Col sm={3}>
-              <input type="weight" className="weight-input" placeholder="weight" />
+            <Col xs={5} sm={5}>
+              Prev
             </Col>
-            <Col sm={1}> x </Col>
-            <Col sm={1}>
-              <input type="reps" className="rep-input" defaultValue={exercise.reps} />
+            <Col xs={4} sm={4}>
+              <input type="text" className="weight-input" placeholder="weight" />
+            </Col>
+            <Col xs={1} sm={1}>
+              x
+            </Col>
+            <Col xs={1} sm={1}>
+              <input type="text" className="rep-input" defaultValue={exercise.reps} />
+            </Col>
+            <Col xs={1} sm={1}>
+              <input type="checkbox" className="rep-input" />
             </Col>
           </Row>
         );
@@ -135,7 +146,7 @@ export const createLoggingForm = workout => {
       result.push(
         <div>
           <Row>
-            <Col sm={1} offset={{ sm: 11 }}>
+            <Col xs={1} sm={1} offset={{ xs: 11, sm: 11 }}>
               <button className="add-button" type="button">
                 <IconContext.Provider value={{ size: '2em' }}>
                   <div>
@@ -156,3 +167,25 @@ export const createLoggingForm = workout => {
   }
   return undefined;
 };
+
+// Get log
+// if one does not exist create on with default values
+export const getLog = day => {
+  // Logs are stored by day
+  const logKey = day.format('YYYY-MM-DD');
+  const localLog = window.localStorage.getItem(logKey);
+  // If does not exist, create one from the current selected routine
+  if (localLog) {
+    return localLog;
+  }
+  return undefined;
+};
+
+// // create log from todays plans
+// if (currentRoutineName) {
+//   const dayOfWeek = day.format('dddd');
+//   const currentWorkout = getWorkoutFromRoutine(currentRoutineName, dayOfWeek);
+//   // window.localStorage.setItem(logKey, 'test');
+//   return currentWorkout;
+// }
+// // If no routine, just give blank screen with option to add workout/excercises

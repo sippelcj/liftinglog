@@ -1,10 +1,11 @@
+import moment from 'moment';
 import {
   getCurrentRoutineName,
   getRoutineList,
   parseRoutineByName,
   getWorkoutByName,
   getWorkoutFromRoutine,
-  createLoggingForm
+  getLog
 } from './index';
 import { defaultRountines, defaultWorkouts } from '../constants';
 // going to test using default routines
@@ -85,6 +86,20 @@ describe('parseRoutineByName', () => {
       ['Barbell Squat - 3 x 5', 'Barbell Overhead Press - 3 x 5', 'RDL - 3 x 5']
     ];
     expect(result).toEqual(expected);
+  });
+});
+
+describe('getLog', () => {
+  // todo mock moment?
+  const today = moment();
+
+  test('should create and return log if exists', () => {
+    window.localStorage.setItem(today.format('YYYY-MM-DD'), 'testLog');
+
+    const result = getLog(today);
+
+    expect(result).toEqual('testLog');
+    window.localStorage.clear();
   });
 });
 

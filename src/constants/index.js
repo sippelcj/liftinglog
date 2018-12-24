@@ -61,101 +61,122 @@ export const defaultExercises = {
 };
 
 export const defaultWorkouts = {
-  LowerStrength: [
-    {
-      // This needs to map to an actual excercise
-      movement: 'Barbell Squat',
-      reps: 6,
-      sets: 3
-    },
-    {
-      movement: 'DeadLift',
-      reps: 6,
-      sets: 3
-    }
-  ],
-  UpperStrength: [
-    {
-      movement: 'Barbell Bench Press',
-      reps: 6,
-      sets: 3
-    },
-    {
-      movement: 'Barbell Row',
-      reps: 6,
-      sets: 3
-    }
-  ],
-  UpperVolume: [
-    {
-      movement: 'Dumbell Bench Press',
-      reps: 8,
-      sets: 4
-    },
-    {
-      movement: 'Dumbell Row',
-      reps: 8,
-      sets: 4
-    }
-  ],
-  LowerVolume: [
-    {
-      movement: 'Front Squat',
-      reps: 8,
-      sets: 5
-    },
-    {
-      movement: 'Paused DeadLift',
-      reps: 8,
-      sets: 3
-    }
-  ],
-  ArmDay: [
-    {
-      movement: 'Close Grip Bench',
-      reps: 8,
-      sets: 3
-    },
-    {
-      movement: 'Bicep Curl',
-      reps: 8,
-      sets: 3
-    }
-  ],
-  StartingStrengthA: [
-    {
-      movement: 'Barbell Squat',
-      reps: 5,
-      sets: 3
-    },
-    {
-      movement: 'Barbell Bench',
-      reps: 5,
-      sets: 3
-    },
-    {
-      movement: 'DeadLift',
-      reps: 5,
-      sets: 3
-    }
-  ],
-  StartingStrengthB: [
-    {
-      movement: 'Barbell Squat',
-      reps: 5,
-      sets: 3
-    },
-    {
-      movement: 'Barbell Overhead Press',
-      reps: 5,
-      sets: 3
-    },
-    {
-      movement: 'RDL',
-      reps: 5,
-      sets: 3
-    }
-  ]
+  LowerStrength: {
+    name: 'Lower Strength',
+    workSets: [
+      {
+        // This needs to map to an actual excercise
+        movement: 'Barbell Squat',
+        reps: 6,
+        sets: 3
+      },
+      {
+        movement: 'DeadLift',
+        reps: 6,
+        sets: 3
+      }
+    ]
+  },
+  UpperStrength: {
+    name: 'Upper Strength',
+    workSets: [
+      {
+        movement: 'Barbell Bench Press',
+        reps: 6,
+        sets: 3
+      },
+      {
+        movement: 'Barbell Row',
+        reps: 6,
+        sets: 3
+      }
+    ]
+  },
+  UpperVolume: {
+    name: 'Upper Volume',
+    workSets: [
+      {
+        movement: 'Dumbell Bench Press',
+        reps: 8,
+        sets: 4
+      },
+      {
+        movement: 'Dumbell Row',
+        reps: 8,
+        sets: 4
+      }
+    ]
+  },
+  LowerVolume: {
+    name: 'Lower Volume',
+    workSets: [
+      {
+        movement: 'Front Squat',
+        reps: 8,
+        sets: 5
+      },
+      {
+        movement: 'Paused DeadLift',
+        reps: 8,
+        sets: 3
+      }
+    ]
+  },
+  ArmDay: {
+    name: 'Arm Day',
+    workSets: [
+      {
+        movement: 'Close Grip Bench',
+        reps: 8,
+        sets: 3
+      },
+      {
+        movement: 'Bicep Curl',
+        reps: 8,
+        sets: 3
+      }
+    ]
+  },
+  StartingStrengthA: {
+    name: 'Starting Strength A',
+    workSets: [
+      {
+        movement: 'Barbell Squat',
+        reps: 5,
+        sets: 3
+      },
+      {
+        movement: 'Barbell Bench',
+        reps: 5,
+        sets: 3
+      },
+      {
+        movement: 'DeadLift',
+        reps: 5,
+        sets: 3
+      }
+    ]
+  },
+  StartingStrengthB: {
+    name: 'Starting Strength B',
+    workSets: [
+      {
+        movement: 'Barbell Squat',
+        reps: 5,
+        sets: 3
+      },
+      {
+        movement: 'Barbell Overhead Press',
+        reps: 5,
+        sets: 3
+      },
+      {
+        movement: 'RDL',
+        reps: 5,
+        sets: 3
+      }
+    ]
+  }
 };
 
 export const defaultRountines = {

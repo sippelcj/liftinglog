@@ -49,6 +49,10 @@ Figure out how to store current log data
   Create Log On Load
     Object will initially be whatever was in the original object in the routine
     But can be customized on a day to day basis
+  Create Log when use clicks start workout?
+    Have workout timer
+
+
   When add exercise or set where do we store it?
   Store it in localData? 
     will get added in when we load
