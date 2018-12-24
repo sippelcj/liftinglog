@@ -109,6 +109,18 @@ export const defaultWorkouts = {
       sets: 3
     }
   ],
+  ArmDay: [
+    {
+      movement: 'Close Grip Bench',
+      reps: 8,
+      sets: 3
+    },
+    {
+      movement: 'Bicep Curl',
+      reps: 8,
+      sets: 3
+    }
+  ],
   StartingStrengthA: [
     {
       movement: 'Barbell Squat',
@@ -147,6 +159,7 @@ export const defaultWorkouts = {
 
 export const defaultRountines = {
   CanditoUpperLowerSplit: {
+    periodization: 'weekly',
     Monday: {
       workout: 'UpperStrength'
     },
@@ -160,12 +173,13 @@ export const defaultRountines = {
     Friday: {
       workout: 'LowerVolume'
     },
-    Sat: {
-      // optional arm day
+    Saturday: {
+      workout: 'ArmDay'
     },
-    Sun: {}
+    Sunday: {}
   },
   StartingStrength: {
+    periodization: 'MWFSplit',
     A: {
       workout: 'StartingStrengthA'
       // optional accesory work
@@ -173,6 +187,12 @@ export const defaultRountines = {
     B: {
       workout: 'StartingStrengthB'
       // optional accesory work
+    }
+  },
+  CanditoAdvancedProgram: {
+    periodization: 'advanced',
+    Week1: {
+      Monday: {}
     }
   }
 };

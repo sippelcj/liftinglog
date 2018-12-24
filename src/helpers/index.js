@@ -2,11 +2,30 @@ import React from 'react';
 import { defaultRountines, defaultWorkouts } from '../constants';
 
 // TODO need to handle A/B day type workouts
-export const getWorkoutByDay = (currentRoutineName, dayOfWeek) => {
-  if (currentRoutineName !== undefined && getRoutineList(currentRoutineName) !== undefined) {
-    return parseWorkoutToString(getRoutineList(currentRoutineName)[dayOfWeek].workout);
+// Check if today is a workout "day"
+// Check previous workout done, if none, pick A,
+
+export const getWorkoutFromRoutine = (currentRoutineName, dayOfWeek) => {
+  if (currentRoutineName) {
+    const routineObject = getRoutineList()[currentRoutineName];
+
+    if (currentRoutineName !== undefined && routineObject !== undefined) {
+      // if periodizaion is weekly based
+      return getWorkoutFromDay(routineObject, dayOfWeek);
+      // if it is split based, getWorkoutFromSplit
+      // if advanced getWorkoutFromAdvanced
+    }
+    return undefined;
   }
   return undefined;
+};
+
+export const getWorkoutFromDay = (routineObject, dayOfWeek) => {
+  const routineForDay = routineObject[dayOfWeek];
+  if (routineForDay !== undefined) {
+    return getWorkoutByName(routineForDay.workout);
+  }
+  return undefined; // undefined will cause "nothing scheduled for today" to be displayed
 };
 
 export const getWorkoutByName = name => {
@@ -22,23 +41,10 @@ export const getWorkoutByName = name => {
 
 export const getCurrentRoutineName = () => window.localStorage.getItem('routine');
 
-export const parseRoutine = routine => {
-  const result = [];
-  // loop though each day and format into object easily read into components
-  Object.keys(routine).forEach(key => {
-    const workDay = routine[key];
-    // if current day has work in it, format for viewing
-    if (workDay.workout !== undefined) {
-      result.push(parseWorkoutToString(workDay.workout));
-    }
-  });
-  return result;
-};
-
-export const parseWorkoutToString = workoutName => {
+export const parseWorkoutToString = workout => {
   const formattedDay = [];
 
-  const workOutForDay = getWorkoutByName(workoutName);
+  const workOutForDay = workout;
   workOutForDay.forEach(exercise => {
     const { movement, sets, reps } = exercise;
     formattedDay.push(`${movement} - ${sets} x ${reps}`);
@@ -52,7 +58,25 @@ export const getRoutineStringByName = routineName => {
   return routines[routineName];
 };
 
-export const parseRoutineByName = routineName => parseRoutine(getRoutineStringByName(routineName));
+export const parseRoutineByName = routineName =>
+  parseRoutineToString(getRoutineStringByName(routineName));
+
+export const parseRoutineToString = routine => {
+  if (routine) {
+    const result = [];
+
+    Object.keys(routine).forEach(key => {
+      const workDay = routine[key];
+      // if current day has work in it, format for viewing
+      if (workDay.workout !== undefined) {
+        const workoutObj = getWorkoutByName(workDay.workout);
+        result.push(parseWorkoutToString(workoutObj));
+      }
+    });
+    return result;
+  }
+  return undefined;
+};
 
 export const getRoutineList = () => {
   // get routines from local storage
@@ -65,11 +89,12 @@ export const getRoutineList = () => {
 export const createLoggingForm = workout => {
   if (workout) {
     const result = [];
-    workout.array.forEach(exercise => {
+    workout.forEach(exercise => {
       result.push(
         <div>
-          {exercise.movement}
+          <span> {exercise.movement}: </span>
           <input type="sets" defaultValue={exercise.sets} />
+          <span> x </span>
           <input type="reps" defaultValue={exercise.reps} />
         </div>
       );

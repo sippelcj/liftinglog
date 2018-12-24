@@ -15,6 +15,9 @@ Need to figure out how I want to have people setup their routine
 
   Make some Mocks of screens
 
+  Handle A/B day type workouts
+
+  Handle ability to change workout from list of presets for a particular day
 
 
 Testing Data Structure for Logging

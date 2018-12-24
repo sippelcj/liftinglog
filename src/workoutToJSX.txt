@@ -1,0 +1,10 @@
+{currentWorkout ? (
+    <div className="list-view">
+      {parseWorkoutToString(currentWorkout).map(excercise => (
+        <span>{excercise}</span>
+      ))}
+      <br />
+    </div>
+  ) : (
+    undefined
+  )}

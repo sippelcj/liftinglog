@@ -5,17 +5,20 @@ class LoggingView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentWorkout: this.props.currentWorkout
+      formContent: this.createFormContent(this.props)
     };
   }
 
+  createFormContent = props => {
+    if (props.currentWorkout) {
+      return createLoggingForm(props.currentWorkout);
+    }
+    return 'Nothing scheduled for today';
+    // Todo add way to manually create workout for day
+  };
+
   render() {
-    return (
-      <div className="list-view">
-        {createLoggingForm(this.state.currentWorkout)}
-        <div> View for logging the current day</div>
-      </div>
-    );
+    return <div className="list-view">{this.state.formContent}</div>;
   }
 }
 

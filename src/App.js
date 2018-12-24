@@ -5,23 +5,29 @@ import LoggingView from './views/logging-view';
 import WorkoutEditorView from './views/workout-editor';
 import RoutineEditorView from './views/routine-editor';
 import './App.css';
-import { getCurrentRoutineName, getWorkoutByDay } from './helpers';
+import { getCurrentRoutineName, parseRoutineByName, getWorkoutFromRoutine } from './helpers';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { mainView: <LoggingView /> };
-    const { currentRoutine, dayOfWeek } = this.state;
+    this.state = {};
     this.state.dayOfWeek = moment().format('dddd');
-    this.state.currentRoutine = getCurrentRoutineName();
-    // TODO change this to be a loggable view instead of just static text
-    this.state.currentWorkout = getWorkoutByDay(currentRoutine, dayOfWeek) || undefined;
+    this.state.currentRoutineName = getCurrentRoutineName();
+    this.state.currentRoutine = parseRoutineByName(this.state.currentRoutineName);
+    const { dayOfWeek, currentRoutineName } = this.state;
+    this.state.currentWorkout = getWorkoutFromRoutine(currentRoutineName, dayOfWeek) || undefined;
+
+    // Logging View is always the default view, so it jump right to logging the current day
+    this.state.mainView = <LoggingView currentWorkout={this.state.currentWorkout} />;
   }
 
+  // invoked to "return" back to this form
   closeCallback = () => {
-    this.setState({ mainView: <LoggingView /> });
+    const { currentWorkout } = this.state;
+    this.setState({ mainView: <LoggingView currentWorkout={currentWorkout} /> });
   };
 
+  // Set current view to whatever is passed in
   mainViewCallBack = view => {
     this.setState({ mainView: view });
   };
@@ -64,31 +70,18 @@ class App extends Component {
   };
 
   render() {
-    const { dayOfWeek, mainView, currentRoutine, currentWorkout } = this.state;
+    const { dayOfWeek, mainView, currentRoutineName } = this.state;
 
     return (
       <div className="App">
         <header className="App-header">
           <div className="header-comp">
-            <span>Header Component</span>
             {dayOfWeek}
+            <span> {currentRoutineName} = routine</span>
             <button type="button"> Settings</button>
           </div>
           <br />
-          <div>
-            {mainView}
-            <span> {currentRoutine} = current routine</span>
-            {currentWorkout ? (
-              <div className="list-view">
-                {currentWorkout.map(excercise => (
-                  <span>{excercise}</span>
-                ))}
-                <br />
-              </div>
-            ) : (
-              undefined
-            )}
-          </div>
+          <div className="main-view-container">{mainView}</div>
           <br />
           <div className="footer-comp">
             <button type="button" onClick={this.openPlateCalculator}>
