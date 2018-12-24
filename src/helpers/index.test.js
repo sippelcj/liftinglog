@@ -5,7 +5,9 @@ import {
   parseRoutineByName,
   getWorkoutByName,
   getWorkoutFromRoutine,
-  getLog
+  getLog,
+  createLoggingStructure,
+  addSetToExcercise
 } from './index';
 import { defaultRountines, defaultWorkouts } from '../constants';
 // going to test using default routines
@@ -100,6 +102,94 @@ describe('getLog', () => {
 
     expect(result).toEqual('testLog');
     window.localStorage.clear();
+  });
+});
+
+describe('createLoggingStructure', () => {
+  test('should create data structure suitable for creating a form', () => {
+    const workout = {
+      name: 'Dummy Workout',
+      workSets: [
+        {
+          movement: 'Barbell Squat',
+          reps: 5,
+          sets: 2
+        },
+        {
+          movement: 'Barbell Bench',
+          reps: 5,
+          sets: 1
+        }
+      ]
+    };
+
+    const result = createLoggingStructure(workout);
+    const expected = {
+      'Barbell Bench': [
+        {
+          checked: false,
+          reps: 5,
+          weight: ''
+        }
+      ],
+      'Barbell Squat': [
+        {
+          checked: false,
+          reps: 5,
+          weight: ''
+        },
+        {
+          checked: false,
+          reps: 5,
+          weight: ''
+        }
+      ]
+    };
+
+    expect(result).toEqual(expected);
+  });
+});
+
+describe('createLoggingStructure', () => {
+  test('should create data structure suitable for creating a form', () => {
+    const loggingStructure = {
+      'Barbell Bench': [
+        {
+          checked: false,
+          reps: 5,
+          weight: ''
+        }
+      ],
+      'Barbell Squat': [
+        {
+          checked: false,
+          reps: 5,
+          weight: ''
+        },
+        {
+          checked: false,
+          reps: 5,
+          weight: ''
+        }
+      ]
+    };
+
+    const expected = [
+      {
+        checked: false,
+        reps: 5,
+        weight: ''
+      },
+      {
+        checked: false,
+        reps: 5,
+        weight: ''
+      }
+    ];
+
+    const result = addSetToExcercise({}, loggingStructure, 'Barbell Bench');
+
+    expect(result['Barbell Bench']).toEqual(expected);
   });
 });
 

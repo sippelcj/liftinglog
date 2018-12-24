@@ -43,9 +43,15 @@ class App extends Component {
   };
 
   startLogging = () => {
-    const { currentWorkout } = this.state;
+    const { currentWorkout, currentDay } = this.state;
     this.setState({
-      mainView: <LoggingView currentWorkout={currentWorkout} resultsView={this.resultsView} />
+      mainView: (
+        <LoggingView
+          currentWorkout={currentWorkout}
+          resultsView={this.resultsView}
+          currentDay={currentDay}
+        />
+      )
     });
   };
 

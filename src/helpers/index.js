@@ -1,4 +1,5 @@
 import React from 'react';
+import { cloneDeep } from 'lodash';
 import { IconContext } from 'react-icons';
 import { FaPlusCircle } from 'react-icons/fa';
 import { Container, Row, Col } from 'react-grid-system';
@@ -106,48 +107,90 @@ export const getRoutineList = () => {
   return routines;
 };
 
+export const createLoggingStructure = workout => {
+  const result = {};
+  workout.workSets.forEach(exercise => {
+    const sets = [];
+    // Container, Row, Col
+    let setNum = 0;
+    for (setNum; setNum < exercise.sets; setNum++) {
+      sets.push({
+        weight: '', // default should be previous entry
+        reps: exercise.reps,
+        checked: false
+      });
+    }
+    result[exercise.movement] = sets;
+  });
+
+  return result;
+};
+
+// CAREFUL this mutuates, in this case this is desired since we want to change
+// the object which is currently rendered
+export const addSetToExcercise = (component, loggingStructure, movement) => {
+  const arrayOfSets = loggingStructure[movement];
+  // get latest set and copy it
+  const setCopy = cloneDeep(arrayOfSets[arrayOfSets.length - 1]);
+  arrayOfSets.push(setCopy);
+
+  component.setState({ loggingData: loggingStructure });
+
+  return loggingStructure;
+};
 // return a default jsx object for logging the current day
 // need to be able to add sets/excercises ect...
-export const createLoggingForm = workout => {
-  if (workout) {
+export const createLoggingForm = (comp, loggingStructure, addSetFunc) => {
+  if (loggingStructure) {
     const result = [];
-    workout.workSets.forEach(exercise => {
+    Object.keys(loggingStructure).forEach(exerciseName => {
       // Container, Row, Col
-      let setNum = 0;
       result.push(
         <Row>
           <Col xs={12} sm={12}>
-            {exercise.movement}
+            {exerciseName}
           </Col>
         </Row>
       );
-      for (setNum; setNum < exercise.sets; setNum++) {
+      loggingStructure[exerciseName].forEach((setObj, index) => {
         result.push(
           <Row>
-            <Col xs={5} sm={5}>
+            <Col xs={1} sm={1}>
+              {index}
+            </Col>
+            <Col xs={4} sm={4}>
               Prev
             </Col>
             <Col xs={4} sm={4}>
-              <input type="text" className="weight-input" placeholder="weight" />
+              <input
+                type="text"
+                className="weight-input"
+                placeholder="weight"
+                defaultValue={setObj.weight}
+              />
             </Col>
             <Col xs={1} sm={1}>
               x
             </Col>
             <Col xs={1} sm={1}>
-              <input type="text" className="rep-input" defaultValue={exercise.reps} />
+              <input type="text" className="rep-input" defaultValue={setObj.reps} />
             </Col>
             <Col xs={1} sm={1}>
               <input type="checkbox" className="rep-input" />
             </Col>
           </Row>
         );
-      }
+      });
       // if more data -
       result.push(
         <div>
           <Row>
             <Col xs={1} sm={1} offset={{ xs: 11, sm: 11 }}>
-              <button className="add-button" type="button">
+              <button
+                className="add-button"
+                type="button"
+                onClick={() => addSetFunc(comp, loggingStructure, exerciseName)}
+              >
                 <IconContext.Provider value={{ size: '2em' }}>
                   <div>
                     <FaPlusCircle />
@@ -182,6 +225,15 @@ export const getLog = day => {
 };
 
 // // create log from todays plans
+export const createLogForWorkout = workout => {
+  const result = {
+    name: workout.name,
+    completedSets: []
+  };
+
+  return result;
+};
+
 // if (currentRoutineName) {
 //   const dayOfWeek = day.format('dddd');
 //   const currentWorkout = getWorkoutFromRoutine(currentRoutineName, dayOfWeek);
