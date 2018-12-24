@@ -1,5 +1,7 @@
+import { IconContext } from 'react-icons';
 import React, { Component } from 'react';
 import moment from 'moment';
+import { FaPlusCircle, FaBars } from 'react-icons/fa';
 import PlateCalculator from './views/plate-calculator';
 import LoggingView from './views/logging-view';
 import WorkoutEditorView from './views/workout-editor';
@@ -75,29 +77,39 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <div className="header-comp">
-            {dayOfWeek}
-            <span> {currentRoutineName} = routine</span>
-            <button type="button"> Settings</button>
-          </div>
-          <br />
-          <div className="main-view-container">{mainView}</div>
-          <br />
-          <div className="footer-comp">
-            <button type="button" onClick={this.openPlateCalculator}>
-              {' '}
-              Go To Plate Calculator
-            </button>
-            <button type="button" onClick={this.openWorkoutEditor}>
-              {' '}
-              Edit Workout
-            </button>
-            <button type="button" onClick={this.openRoutineEditor}>
-              {' '}
-              Edit Routine
-            </button>
-          </div>
+          {dayOfWeek}
+          <span> {currentRoutineName} = routine</span>
+          <button type="button">
+            <IconContext.Provider value={{ color: 'blue', size: '2em' }}>
+              <div>
+                <FaBars />
+              </div>
+            </IconContext.Provider>
+          </button>
         </header>
+        <body className="App-body">
+          <div className="main-view-container">{mainView}</div>
+          <div> something else </div>
+          <div> something else </div>
+          <button className="add-button" type="button">
+            <IconContext.Provider value={{ size: '2em' }}>
+              <div>
+                Add <FaPlusCircle />
+              </div>
+            </IconContext.Provider>
+          </button>
+        </body>
+        <footer className="App-footer">
+          <button type="button" onClick={this.openPlateCalculator}>
+            Go To Plate Calculator
+          </button>
+          <button type="button" onClick={this.openWorkoutEditor}>
+            Edit Workout
+          </button>
+          <button type="button" onClick={this.openRoutineEditor}>
+            Edit Routine
+          </button>
+        </footer>
       </div>
     );
   }
