@@ -138,9 +138,20 @@ export const addSetToExcercise = (component, loggingStructure, movement) => {
 
   return loggingStructure;
 };
+
+export const updateInput = (e, comp, loggingStructure, index, exerciseName) => {
+  const thing = loggingStructure[exerciseName][index];
+
+  thing.weight = e.target.value;
+
+  comp.setState({
+    loggingStructure
+  });
+};
+
 // return a default jsx object for logging the current day
 // need to be able to add sets/excercises ect...
-export const createLoggingForm = (comp, loggingStructure, addSetFunc) => {
+export const createLoggingForm = (comp, day, loggingStructure, addSetFunc) => {
   if (loggingStructure) {
     const result = [];
     Object.keys(loggingStructure).forEach(exerciseName => {
@@ -167,6 +178,9 @@ export const createLoggingForm = (comp, loggingStructure, addSetFunc) => {
                 className="weight-input"
                 placeholder="weight"
                 defaultValue={setObj.weight}
+                onChange={e => {
+                  updateInput(e, comp, loggingStructure, index, exerciseName);
+                }}
               />
             </Col>
             <Col xs={1} sm={1}>
@@ -176,7 +190,13 @@ export const createLoggingForm = (comp, loggingStructure, addSetFunc) => {
               <input type="text" className="rep-input" defaultValue={setObj.reps} />
             </Col>
             <Col xs={1} sm={1}>
-              <input type="checkbox" className="rep-input" />
+              <input
+                onClick={() => {
+                  logSet(day, index, exerciseName, setObj.weight, setObj.reps);
+                }}
+                type="checkbox"
+                className="rep-input"
+              />
             </Col>
           </Row>
         );
@@ -224,20 +244,49 @@ export const getLog = day => {
   return undefined;
 };
 
-// // create log from todays plans
+// create log from todays plans
 export const createLogForWorkout = workout => {
   const result = {
     name: workout.name,
-    completedSets: []
+    sets: {}
   };
 
   return result;
 };
 
-// if (currentRoutineName) {
-//   const dayOfWeek = day.format('dddd');
-//   const currentWorkout = getWorkoutFromRoutine(currentRoutineName, dayOfWeek);
-//   // window.localStorage.setItem(logKey, 'test');
-//   return currentWorkout;
-// }
-// // If no routine, just give blank screen with option to add workout/excercises
+// create log from todays plans
+export const logSet = (day, index, name, weight, reps) => {
+  const logKey = day.format('YYYY-MM-DD');
+  const localLog = JSON.parse(window.localStorage.getItem(logKey));
+
+  let setsForThisMovement = localLog.sets[name];
+  if (setsForThisMovement === undefined) {
+    setsForThisMovement = [];
+  }
+
+  const set = {
+    index,
+    weight,
+    reps
+  };
+  // Check to see if set already exists with this index
+  if (
+    setsForThisMovement.findIndex(setFromStorage => {
+      return index === setFromStorage.index;
+    }) > -1
+  ) {
+    setsForThisMovement[index] = set;
+  } else {
+    setsForThisMovement.push(set);
+  }
+
+  localLog.sets[name] = setsForThisMovement;
+
+  window.localStorage.setItem(logKey, JSON.stringify(localLog));
+
+  return localLog;
+};
+
+// Add method for removing set from log
+
+// And removing sets from the view

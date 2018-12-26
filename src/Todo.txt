@@ -1,4 +1,7 @@
-Find database of excercises
+Convert commonly used props to use context
+Error handling to see if log already exists for day(start new workout or cancel)
+
+Find database of excercises?
 
 Things to store:
   Current Selected Routine
@@ -10,10 +13,6 @@ Need to figure out how I want to have people setup their routine
   Build Out Routine Builder
 
   Build Out workout editor
-
-  Build Out logging view/editor
-
-  Make some Mocks of screens
 
   Handle A/B day type workouts
 

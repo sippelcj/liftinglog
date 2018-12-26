@@ -7,7 +7,9 @@ import {
   getWorkoutFromRoutine,
   getLog,
   createLoggingStructure,
-  addSetToExcercise
+  addSetToExcercise,
+  createLogForWorkout,
+  logSet
 } from './index';
 import { defaultRountines, defaultWorkouts } from '../constants';
 // going to test using default routines
@@ -152,6 +154,7 @@ describe('createLoggingStructure', () => {
 
 describe('createLoggingStructure', () => {
   test('should create data structure suitable for creating a form', () => {
+    const setState = jest.fn();
     const loggingStructure = {
       'Barbell Bench': [
         {
@@ -187,9 +190,63 @@ describe('createLoggingStructure', () => {
       }
     ];
 
-    const result = addSetToExcercise({}, loggingStructure, 'Barbell Bench');
+    const result = addSetToExcercise({ setState }, loggingStructure, 'Barbell Bench');
 
+    // expect setstate to be called
     expect(result['Barbell Bench']).toEqual(expected);
+  });
+});
+
+describe('logSet', () => {
+  test('should ', () => {
+    const day = moment();
+    const logKey = day.format('YYYY-MM-DD');
+    const name = 'Some Movement';
+    const weight = '300';
+    const reps = 6;
+
+    const newLog = createLogForWorkout({
+      name: 'Some Workout'
+    });
+    window.localStorage.setItem(day.format('YYYY-MM-DD'), JSON.stringify(newLog));
+    logSet(day, 0, name, weight, reps);
+
+    const expected = {
+      name: 'Some Workout',
+      sets: {
+        'Some Movement': [
+          {
+            index: 0,
+            weight: '300',
+            reps: 6
+          }
+        ]
+      }
+    };
+
+    expect(JSON.parse(window.localStorage.getItem(logKey))).toEqual(expected);
+
+    // Test adding another set to the log
+    logSet(day, 1, name, weight, 5);
+
+    expected.sets['Some Movement'].push({
+      index: 1,
+      weight: '300',
+      reps: 5
+    });
+
+    expect(JSON.parse(window.localStorage.getItem(logKey))).toEqual(expected);
+
+    // Test adding a set as the same position as last
+    logSet(day, 1, name, '250', 8);
+
+    expected.sets['Some Movement'][1] = {
+      index: 1,
+      weight: '250',
+      reps: 8
+    };
+
+    expect(JSON.parse(window.localStorage.getItem(logKey))).toEqual(expected);
   });
 });
 

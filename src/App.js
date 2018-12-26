@@ -1,16 +1,22 @@
 import { IconContext } from 'react-icons';
 import React, { Component } from 'react';
 import moment from 'moment';
-import { FaPlusCircle, FaBars } from 'react-icons/fa';
+import { FaBars } from 'react-icons/fa';
 import { setConfiguration } from 'react-grid-system';
 import PlateCalculator from './views/plate-calculator';
 import MainView from './views/main-view';
+import AddExerciseView from './views/add-exercise-view';
 import ResultsView from './views/results-view';
 import LoggingView from './views/logging-view';
 import WorkoutEditorView from './views/workout-editor';
 import RoutineEditorView from './views/routine-editor';
 import './App.css';
-import { getCurrentRoutineName, parseRoutineByName, getWorkoutFromRoutine } from './helpers';
+import {
+  getCurrentRoutineName,
+  createLoggingStructure,
+  parseRoutineByName,
+  getWorkoutFromRoutine
+} from './helpers';
 
 class App extends Component {
   constructor(props) {
@@ -25,6 +31,7 @@ class App extends Component {
     this.state.currentRoutine = parseRoutineByName(this.state.currentRoutineName);
     const { dayOfWeek, currentRoutineName } = this.state;
     this.state.currentWorkout = getWorkoutFromRoutine(currentRoutineName, dayOfWeek) || undefined;
+    this.state.loggingData = createLoggingStructure(this.state.currentWorkout);
 
     // Get todays log
     // getLog(currentDay);
@@ -43,13 +50,17 @@ class App extends Component {
   };
 
   startLogging = () => {
-    const { currentWorkout, currentDay } = this.state;
+    const { currentWorkout, currentDay, loggingData } = this.state;
     this.setState({
       mainView: (
         <LoggingView
           currentWorkout={currentWorkout}
-          resultsView={this.resultsView}
+          loggingData={loggingData}
           currentDay={currentDay}
+          resultsView={this.resultsView}
+          openExerciseSelector={this.openExerciseSelector}
+          backToLogView={this.startLogging}
+          setLoggingDataCallback={this.setLoggingDataCallback}
         />
       )
     });
@@ -72,11 +83,29 @@ class App extends Component {
     this.setState({ currentRoutine: selectedRoutine });
   };
 
+  setLoggingDataCallback = loggingData => {
+    this.setState({ loggingData });
+  };
+
   openPlateCalculator = () => {
     const newView = (
       <PlateCalculator
         closeCallback={this.closeCallback}
         mainViewCallBack={this.mainViewCallBack}
+      />
+    );
+    this.setState({ mainView: newView });
+  };
+
+  openExerciseSelector = () => {
+    const { loggingData } = this.state;
+    const newView = (
+      <AddExerciseView
+        closeCallback={this.closeCallback}
+        mainViewCallBack={this.mainViewCallBack}
+        backToLogView={this.startLogging}
+        setLoggingDataCallback={this.setLoggingDataCallback}
+        loggingData={loggingData}
       />
     );
     this.setState({ mainView: newView });
@@ -122,13 +151,6 @@ class App extends Component {
         </header>
         <body className="App-body">
           <div className="main-view-container">{mainView}</div>
-          <button className="add-button" type="button">
-            <IconContext.Provider value={{ size: '2em' }}>
-              <div>
-                Add <FaPlusCircle />
-              </div>
-            </IconContext.Provider>
-          </button>
         </body>
         <footer className="App-footer">
           <button type="button" onClick={this.openPlateCalculator}>

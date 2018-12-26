@@ -7,6 +7,7 @@
     "prettier/prettier": ["error"],
     "linebreak-style": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "arrow-body-style": "off",
     "react/jsx-one-expression-per-line": "off",
     "react/destructuring-assignment": "off",
     "react/prop-types": "off",
